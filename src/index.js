@@ -178,7 +178,7 @@ async function playRaceEngine(character1, character2){
             let event  = await getConfrontEvent();
             switch (true) {
                 case event === "BOMBA":
-                    console.log("O perdedor do confronto perderá 2 pontos!");
+                    console.log("O perdedor do confronto perderá até 2 pontos!");
                     break;
                 case event === "CASCO":
                     console.log("O perdedor do confronto perderá 1 ponto!");
@@ -210,6 +210,16 @@ async function playRaceEngine(character1, character2){
                 case powerResult2 > powerResult1 && character1.PONTOS > 1 && event === "BOMBA":
                     console.log(`${character2.NOME} venceu o confronto! ${character1.NOME} perdeu 2 pontos 💣`);
                     character1.PONTOS -= 2;
+                    await showScoreboard(character1, character2);
+                    break;
+                case powerResult1 > powerResult2 && character2.PONTOS === 1 && event === "BOMBA":
+                    console.log(`${character1.NOME} venceu o confronto! ${character2.NOME} perdeu 1 ponto 💣`);
+                    character2.PONTOS--;
+                    await showScoreboard(character1, character2);
+                    break;
+                case powerResult2 > powerResult1 && character1.PONTOS === 1 && event === "BOMBA":
+                    console.log(`${character2.NOME} venceu o confronto! ${character1.NOME} perdeu 1 ponto 💣`);
+                    character1.PONTOS--;
                     await showScoreboard(character1, character2);
                     break;
                 case powerResult1 > powerResult2 && character2.PONTOS > 0 && event === "CASCO":
